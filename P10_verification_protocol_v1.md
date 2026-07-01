@@ -5,10 +5,10 @@
 the disciplined separation of what the data supports from what the interpretation
 invented. Domain-agnostic — applies to any claim built on measured signals.*
 
-**Author:** Ivan Nestorov, VolMax Studio Lab  
-**Type:** Operational verification protocol (open doctrine)  
-**Version:** P10 v1.0  
-**Status:** Working protocol, validated on the author's own portfolio corpus  
+**Author:** Ivan Nestorov, VolMax Studio Lab
+**Type:** Operational verification protocol (open doctrine)
+**Version:** P10 v1.0
+**Status:** Working protocol, validated on the author's own portfolio corpus
 
 ---
 
