@@ -1,214 +1,49 @@
-# P10 — The Verification Protocol
+# P10 — The Verification Framework
 ### Separating Signal from Artifact in Measured-System Claims
 
-*A method, not an apparatus. Where a patent claims a device, this claims a procedure:
-the disciplined separation of what the data supports from what the interpretation
-invented. Domain-agnostic — applies to any claim built on measured signals.*
+*A method, not an apparatus. Where a patent claims a device, this claims a procedure: the disciplined separation of what the data supports from what the interpretation invented.*
 
 **Author:** Ivan Nestorov, VolMax Studio Lab  
-**Type:** Operational verification protocol (open doctrine)  
-**Version:** P10 v1.0  
-**Status:** Working protocol, validated on the author's own portfolio corpus  
+**Status:** Open Doctrine / Core Methodology Entry Point  
+**Version:** 1.0
 
 ---
 
-## Abstract
+## Overview
 
-Most failures in data-driven engineering are not failures of measurement — the sensor
-reports honestly — but failures of *interpretation* layered on top of it. This document
-defines a verification protocol that locates and tests that interpretation layer through
-five ordered levels, from data integrity to independent verdict. The protocol is
-adversarial toward the analyst's own claims first, treats the caveat as the load-bearing
-error-catching element rather than a disclaimer, and accepts a result only when it
-regenerates from source.
+The P10 framework is a meta-verification protocol designed to evaluate data-driven claims on physical, measured systems. Rather than assigning a rating or score, P10 defines a reproducible sequence of tests that separates physical signal from interpretation-driven artifacts. 
 
-The protocol does not *score* a model. It *explains a decision*. Every line in a P10
-report traces to a specific test, every test to specific data and a specific script. Its
-authority rests not on an institutional seal but on complete transparency: you do not have
-to trust the verdict — you can re-run it.
+The framework is structured as a two-stage process: a Stage 0 feasibility gatekeeper followed by a five-level computational audit.
 
 ---
 
-## 1. Premise (the axiom)
+## Directory Map
 
-> The sensor does not lie. The physics does not lie. Everything between the raw signal
-> and the reported number is interpretation — and interpretation is where claims fail.
+### 1. [L0 — Audit Feasibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Feasibility_Protocol.md)
+Before beginning any analysis, the proposed audit must pass the L0 checklist. It validates if the claim is mathematically and operationally falsifiable by confirming:
+*   **Subject & Claim:** A specific claimant and testable assertion.
+*   **Ground Truth Anchor:** An independent, physically coupled reference series.
+*   **Falsification Criterion:** Predefined limits under which the claim fails.
+*   **Reproducible Inputs:** Publicly accessible, hash-locked raw data.
+*   **Physical Constraints:** Conservation laws limiting the solution space.
 
-The verifier's position is the gap between measurement and claim. Independence from the
-claim is not a courtesy; it is the precondition for a trustworthy verdict. An analyst
-grading their own model has the same conflict of interest as a vendor selling it.
+*If any check fails, the audit is terminated at L0 as **Unfalsifiable-as-Stated**.*
 
----
+### 2. [L1–L5 — Core Verification Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)
+Once feasibility is verified, the claim enters the core five-level audit:
+*   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and split splits.
+*   **L2 Physics Compliance:** Enforces physical laws, conservation limits, and resolution thresholds.
+*   **L3 Statistical Integrity:** Detects data leakage, preprocessing leakage, and concurrence tracking.
+*   **L4 Reproducibility:** Pin-locks code and inputs, ensuring deterministic replication.
+*   **L5 Independent Verdict:** Delivers the final verdict: *Verified*, *Verified with Limitations*, or *Not Verified*.
 
-## 2. What P10 is — and what it deliberately is not
-
-**P10 is a protocol that explains a decision.** It defines, in order, what is checked,
-against what criterion, and what the pass/fail rule is — so that the final verdict is not
-an opinion but a traceable conclusion.
-
-**P10 is not a rating.** It produces no numeric score (no "96/100"), because a score that
-does not regenerate from a formula is exactly the kind of unbacked number P10 exists to
-catch in others. A verifier that assigns a flattering number has reacquired the vendor's
-conflict of interest.
-
-**P10 is not a certificate of authority.** It issues no accreditation. TÜV or DNV can
-certify because an institution stands behind the seal; P10, at this stage, builds trust on
-a different foundation — reproducibility. The report's weight comes from the fact that
-every claim in it can be independently re-run, not from who signed it.
+### 3. [Domain Annex: Battery Systems](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Battery_Annex.md)
+Translates the general P10 protocol into concrete, domain-specific checks for electrochemical storage assets, defining explicit tests for capacity degradation, thermal response, and dispatch conformance.
 
 ---
 
-## 3. The five verification levels
+## The Core Philosophy
 
-The levels run in order. **A failure at a level halts the audit** — there is no point
-running statistics on data that failed integrity, or reproducibility on a result already
-shown to be an artifact. The report states exactly where the audit stopped and why.
-
-### P10-L1 — Data Integrity
-*Is the input trustworthy enough to audit at all?*
-
-Checks: dataset provenance; missing values; timestamp consistency; unit consistency;
-sensor-calibration plausibility; duplicate records; split integrity (how train/test was
-partitioned).
-
-Rule: any integrity failure that would invalidate every downstream result **halts the
-audit** at L1. A model cannot be verified on data that cannot be trusted.
-
-### P10-L2 — Physics Compliance
-*Does the model's output respect the governing law?*
-
-Checks: conservation laws; monotonic degradation (no impossible "un-aging"); thermodynamic
-limits; measurement resolution (no metric reported below the sensor's noise floor);
-physical plausibility of the output range.
-
-Outcome per check: **PASS / WARNING / FAIL.** A physics FAIL (e.g. a capacity estimate
-that recovers spontaneously) is decisive — the floor is checked before the ceiling.
-
-### P10-L3 — Statistical Integrity
-*Is the reported number an effect of the data, or of the interpretation?*
-
-Checks: leakage detection (train/test contamination); preprocessing leakage (transforms
-fit before the split); group/batch leakage (unit or campaign signature standing in for
-prediction); out-of-distribution behavior; effect-size correction (η²→ω², R²→adjusted);
-confidence calibration (does the model quantify its own uncertainty, and is that
-uncertainty calibrated); concurrence-vs-prediction (does a claimed predictor forecast, or
-merely track).
-
-Rule: a confirmed leakage or curation finding invalidates the reported accuracy — the
-corrected number is computed and reported alongside the mechanism.
-
-### P10-L4 — Reproducibility
-*Can every number be regenerated from source?*
-
-Requires: a reproducible script; deterministic execution (fixed seed); a version lock on
-the code; a dataset identifier (hash) so the exact input is pinned; a report identifier so
-the exact document is pinned.
-
-Rule: if a headline number cannot be regenerated from the provided script, it is **FAIL**
-— an unreproducible result is an assertion, not a finding.
-
-### P10-L5 — Independent Verdict
-*What is the honest conclusion, and why?*
-
-One of three:
-- **Verified** — survives held-out data and physical law; the reported number is the
-  honest number.
-- **Verified with Limitations** — holds under stated conditions, but with bounded
-  caveats that are named explicitly (e.g. small calibration set; single operating
-  condition; simulation-based ground truth).
-- **Not Verified** — the reported number is an artifact of leakage, inflation, or
-  curation, or cannot be reproduced; the corrected number (where one exists) is stated.
-
----
-
-## 4. The output format — an audit trail, not a grade
-
-The final decision is presented as a per-level trail. Each row carries a **status** and a
-**reason** that points to a concrete test. This is not scoring; it is a documented chain
-in which every decision can be checked.
-
-**Example (an audit halted by leakage at L3):**
-
-| Level | Status | Reason |
-|---|---|---|
-| L1 Data Integrity | PASS | Dataset complete; cell-level split verified |
-| L2 Physics Compliance | PASS | No physical inconsistencies detected |
-| L3 Statistical Integrity | FAIL | Cell-level leakage identified; accuracy invalidated |
-| L4 Reproducibility | NOT EXECUTED | Audit terminated after L3 failure |
-| **Final Verdict** | **Not Verified** | Leakage invalidates the reported accuracy |
-
-Every entry answers "why" with a fact, not a number. "FAIL: cell-level leakage" leads
-directly to the test that found it, which leads to the data and the script. That chain —
-claim → test → data → script — is the whole product.
-
----
-
-## 5. Report identity and integrity (stated for exactly what they do)
-
-Each P10 report carries two technical elements. Their descriptions claim **exactly their
-function and nothing more** — no implied accreditation, no legal weight.
-
-- **Internal report ID** (e.g. `VM-2026-00184`): an internal document identifier for
-  reference and versioning. It is not a certificate number and implies no external
-  registry.
-- **Document hash** (SHA-256 of the final report): allows any reader to verify that the
-  report's content has not been altered after issuance. It is an integrity check on the
-  file — nothing more. It does not confer legal validity or third-party certification.
-
-Also recorded: date of issuance, protocol version (P10 v1.0), and the software/commit
-version used to produce the results.
-
-The discipline here is the same one P10 applies to numbers: **state exactly what the
-element does, not a gram more.** A hash checks file integrity — so that is what is
-claimed, not "guarantees validity." An ID names a document — so that is what is claimed,
-not "certifies compliance."
-
----
-
-## 6. The caveat theorem
-
-**Claim:** In this protocol, the caveat is not a hedge appended to a conclusion — it is
-the operator that performs the separation.
-
-**Argument:** Every artifact in L3 is detected by a constraint that *narrows* the claim:
-"split by unit" catches leakage; "report ω²" catches inflation; "full-set error" catches
-curation; "held-out only" catches concurrence-as-prediction. Each is a caveat in
-operational form. Removing caveats to maximize confidence or density removes exactly the
-operators that catch the errors. Therefore a method optimized for "no caveats, deliver
-immediately, density above all" is structurally identical to the unverified claim it is
-meant to test — it has discarded its own instrument. **The caveat is the blade that
-separates wheat from chaff; a verifier that drops it is winnowing with no wind.**
-
----
-
-## 7. Worked example (validation on own corpus)
-
-The protocol was applied, adversarially, to the author's *own* portfolio — the strongest
-test of a verifier being whether it catches itself:
-
-| Claim as first stated | Level / mechanism | Corrected verdict |
-|---|---|---|
-| Protocol explains η²=77% of cycle life | L3 inflation (~2 cells/group, null η²≈0.5) | ω²-corrected 66%; rate knobs <5% each |
-| Discharge model reproduces paper at 9.97% | L3 curation (one fast-failing cell dropped) | full-set 18.3%; gap traced, cell kept |
-| "OOD" partition demonstrates distribution shift | L1 fabricated artifact (renamed duplicate of test set) | removed; real shift built and labeled |
-| R_ct r≈−0.95 indicates strong predictor | L3 concurrence-as-prediction | concurrent tracking only; not early-predictive |
-| SOH point-estimate is safe under OOD | L3 uncertainty absent; conformal bounds bloat under shift | UQ necessary but not sufficient under shift |
-
-Claims entered; not one survived unchanged. Each correction was produced by a caveat-
-operator from a P10 level, applied to the author's own work before any external party
-could. That is the portfolio's signature: hardest on its own claims first.
-
----
-
-## 8. Honest status
-
-This is a protocol, validated on the author's own corpus. It is not yet validated by
-independent application to third-party claims under commercial conditions — that
-validation comes only when an external client's claim is audited and the verdict holds up.
-Until then it is a strong, self-consistent procedure with worked examples, not a proven
-industry standard. Stated plainly, per its own rules.
-
----
-
-*Physics doesn't lie. Sensors don't lie. The protocol stands at the gap, explains the
-decision, and hands over the script.*
+1.  **Hardest on ourselves first:** The protocol is applied adversarially to the analyst's own assumptions first.
+2.  **No institutional seals:** Trust is established through complete, local reproducibility of every test and figure.
+3.  **The Caveat Theorem:** Caveats are not disclaimers; they are the active operators that detect and bound statistical anomalies. A verifier that drops caveats has discarded its own instrument.
