@@ -13,24 +13,24 @@
 
 The P10 framework is a meta-verification protocol designed to evaluate data-driven claims on physical, measured systems. Rather than assigning a rating or score, P10 defines a reproducible sequence of tests that separates physical signal from interpretation-driven artifacts. 
 
-The framework is structured as a two-stage process: a Stage 0 feasibility gatekeeper followed by a five-level computational audit.
+The framework is structured as a two-stage process: a Stage 0 admissibility gatekeeper followed by a five-level computational audit.
 
 ---
 
 ## Directory Map
 
-### 1. [L0 — Audit Feasibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Feasibility_Protocol.md)
+### 1. [L0 — Audit Admissibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Admissibility_Protocol.md)
 Before beginning any analysis, the proposed audit must pass the L0 checklist. It validates if the claim is mathematically and operationally falsifiable by confirming:
 *   **Subject & Claim:** A specific claimant and testable assertion.
-*   **Ground Truth Anchor:** An independent, physically coupled reference series.
+*   **Ground Truth Anchor:** An independent reference series sufficiently independent to permit falsification.
 *   **Falsification Criterion:** Predefined limits under which the claim fails.
-*   **Reproducible Inputs:** Publicly accessible, hash-locked raw data.
+*   **Reproducible Inputs:** Versioned and immutable raw data accessible to reviewers.
 *   **Physical Constraints:** Conservation laws limiting the solution space.
 
 *If any check fails, the audit is terminated at L0 as **Unfalsifiable-as-Stated**.*
 
 ### 2. [L1–L5 — Core Verification Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)
-Once feasibility is verified, the claim enters the core five-level audit:
+Once admissibility is verified, the claim enters the core five-level audit:
 *   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and split splits.
 *   **L2 Physics Compliance:** Enforces physical laws, conservation limits, and resolution thresholds.
 *   **L3 Statistical Integrity:** Detects data leakage, preprocessing leakage, and concurrence tracking.
