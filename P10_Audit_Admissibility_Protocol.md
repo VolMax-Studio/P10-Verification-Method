@@ -1,7 +1,7 @@
 # P10 — Audit Admissibility Protocol
 ### Stage 0 / L0 Gatekeeper Checklist for Measured-System Claims
 
-*Version: 1.0*  
+*Version: 1.1*  
 *Author: Ivan Nestorov, VolMax Studio Lab*  
 *Status: Open Doctrine / Core Gatekeeper*
 
@@ -79,8 +79,8 @@ To illustrate the necessity of the P10-L0 gatekeeper, we compare two recent case
 
 ### Case 1: AEMO BESS Dispatch Audit
 *   **Claim ($C$):** Battery energy storage systems (BESS) conform to 5-minute dispatch instructions in the NEM.
-*   **Ground Truth ($T$):** Publicly archived 4-second SCADA and 5-minute targets from AEMO.
-*   **Falsification ($E$):** Maximum error exceedance bands (max(6 MW, 3% capacity)).
+*   **Ground Truth ($T$):** Publicly archived 5-minute SCADA averages (SCADAVALUE) and 5-minute dispatch targets (INITIALMW) from AEMO NEMWEB.
+*   **Falsification ($E$):** Maximum error exceedance bands ($\max(6\text{ MW}, 3\%\text{ capacity})$).
 *   **Physical Constraints ($P$):** Power output must respect nameplate limits and bid parameters.
 *   **L0 Status:** **Auditable (Proceed to L1).** Resulted in a complete, reproducible audit report with a clear verdict.
 
@@ -88,11 +88,11 @@ To illustrate the necessity of the P10-L0 gatekeeper, we compare two recent case
 *   **Claim ($C$):** Reconstructed nodal injections (generation/load) for 7,000 buses are physically and operationally accurate.
 *   **Ground Truth ($T$):** None at node-level. RTE explicitly omits individual generation and load telemetry for privacy and security.
 *   **Falsification ($E$):** None. Because the system is underdetermined, infinite combinations of nodal injections satisfy the network's power flow constraints.
-*   **L0 Status:** **Reclassify / Unfalsifiable-as-Stated (Halted at L0).** 
+*   **L0 Status:** **Unfalsifiable-as-Stated (Disposition: Reclassify to Optimization/Synthesis).** 
     *   *Why:* The individual nodal injections are **unfalsifiable**.
     *   *Correction:* The task must be reclassified. It is either:
         1.  **Reclassified as Optimization/Synthesis (Non-Audit):** Extricated from the VolMax Audit brand.
-        2.  **Anchored to Regional/Large-Unit actuals:** If we introduce éCO2mix (regional load/generation sums at 15-minute intervals) and ENTSO-E (large generation units $\ge 100\text{ MW}$ hourly actuals), we establish a **statistical anchor**. The reconstruction is only auditable to the extent that it conforms to these aggregates. Without these anchors, the audit cannot proceed.
+        2.  **Anchored to Regional/Large-Unit actuals:** If we introduce éCO2mix (regional load/generation sums at 15-minute intervals) and ENTSO-E (large generation units $\ge 100\text{ MW}$ hourly actuals), we establish a **statistical anchor**. The reconstruction is only auditable to the extent that it conforms to these aggregates. *Note: The anchor validates the aggregate marginal only; nodal distribution remains unfalsifiable.* Without these anchors, the audit cannot proceed.
 
 ---
 

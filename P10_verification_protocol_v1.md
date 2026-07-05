@@ -7,7 +7,7 @@ invented. Domain-agnostic — applies to any claim built on measured signals.*
 
 **Author:** Ivan Nestorov, VolMax Studio Lab
 **Type:** Operational verification protocol (open doctrine)
-**Version:** P10 v1.0
+**Version:** P10 v1.1
 **Status:** Working protocol, validated on the author's own portfolio corpus
 
 ---
@@ -58,11 +58,16 @@ every claim in it can be independently re-run, not from who signed it.
 
 ---
 
-## 3. The five verification levels
+## 3. The verification sequence
 
-The levels run in order. **A failure at a level halts the audit** — there is no point
-running statistics on data that failed integrity, or reproducibility on a result already
-shown to be an artifact. The report states exactly where the audit stopped and why.
+The protocol begins with Stage 0 (Admissibility), followed by five ordered levels (L1–L5). **A failure at any stage halts the audit** — there is no point checking data integrity if the claim is structurally unfalsifiable, running statistics on data that failed integrity, or testing reproducibility on a result already shown to be a physical artifact. The report states exactly where the audit stopped and why.
+
+### P10-L0 — Audit Admissibility (Stage 0 Gatekeeper)
+*Is this technical claim even capable of being audited?*
+
+Checks: claimant identity, ground-truth anchor independence, mathematical/physical falsification thresholds, input reproducibility, and physical bounds (see detailed protocol in [P10_Audit_Admissibility_Protocol.md](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Admissibility_Protocol.md)).
+
+Rule: any check failure at Stage 0 classifies the claim as **Unfalsifiable-as-Stated** or redirects to **Reclassify**, terminating the audit immediately.
 
 ### P10-L1 — Data Integrity
 *Is the input trustworthy enough to audit at all?*

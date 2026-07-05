@@ -5,7 +5,7 @@
 
 **Author:** Ivan Nestorov, VolMax Studio Lab  
 **Status:** Open Doctrine / Core Methodology Entry Point  
-**Version:** 1.0
+**Version:** 1.1
 
 ---
 
@@ -31,7 +31,7 @@ Before beginning any analysis, the proposed audit must pass the L0 checklist. It
 
 ### 2. [L1–L5 — Core Verification Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)
 Once admissibility is verified, the claim enters the core five-level audit:
-*   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and split splits.
+*   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and train/test partitioning.
 *   **L2 Physics Compliance:** Enforces physical laws, conservation limits, and resolution thresholds.
 *   **L3 Statistical Integrity:** Detects data leakage, preprocessing leakage, and concurrence tracking.
 *   **L4 Reproducibility:** Pin-locks code and inputs, ensuring deterministic replication.
