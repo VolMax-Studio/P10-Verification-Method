@@ -44,6 +44,6 @@ Translates the general P10 protocol into concrete, domain-specific checks for el
 
 ## The Core Philosophy
 
-1.  **Hardest on ourselves first:** The protocol is applied adversarially to the analyst's own assumptions first.
+1.  **Hardest on ourselves first:** The protocol is applied adversarially to the analyst's own assumptions first (see the [Governance Rejection Notice](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/REJECTION_NOTICE_v1.1.md) as a demonstration of self-applied admissibility limits).
 2.  **No institutional seals:** Trust is established through complete, local reproducibility of every test and figure.
 3.  **The Caveat Theorem:** Caveats are not disclaimers; they are the active operators that detect and bound statistical anomalies. A verifier that drops caveats has discarded its own instrument.

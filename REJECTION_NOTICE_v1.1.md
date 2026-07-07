@@ -1,4 +1,4 @@
-# P10 Verification Protocol: Proposal Rejection Notice (Draft v1.1 - Lyapunov/Notary)
+# P10 Verification Protocol: Proposal Rejection Notice (External Lyapunov/Notary Draft)
 **Date**: 2026-07-04  
 **Author**: Ivan Nestorov, VolMax Studio Lab  
 
@@ -6,16 +6,16 @@
 
 ## Architectural Decision
 
-The external draft proposal suggesting updates to the core P10 protocol (designated as **Draft v1.1 (Lyapunov/Notary Proposal)**) is **rejected in its entirety**. 
+The external draft proposal suggesting updates to the core P10 protocol (designated as the **External Lyapunov/Notary Draft**) is **rejected in its entirety**. 
 
-The official P10 Verification Protocol is established at **v1.1** (incorporating the domain-agnostic [L0 Audit Admissibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Admissibility_Protocol.md) and defined in [P10_verification_protocol_v1.md](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)). The core protocol remains locked against the rejected Draft v1.1 (Lyapunov/Notary) features, and any domain-specific extensions remain strictly restricted to modular Annexes.
+The official P10 Verification Protocol is established at **v1.1** (incorporating the domain-agnostic [L0 Audit Admissibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Admissibility_Protocol.md) and defined in [P10_verification_protocol_v1.md](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)). The core protocol remains locked against the rejected External Lyapunov/Notary Draft features, and any domain-specific extensions remain strictly restricted to modular Annexes.
 
 ---
 
 ## Rationale for Rejection
 
 1.  **Preservation of Domain-Agnosticism**:
-    The strength of the P10 Verification Protocol lies in its general applicability to any system built on measured physical signals (battery systems, electrical grids, data centers, heat exchangers, or mechanical turbines). Draft v1.1 attempted to introduce domain-specific tools (such as Lyapunov exponents, Detrended Fluctuation Analysis (DFA), and halo adapters) directly into the core, violating this abstraction layer.
+    The strength of the P10 Verification Protocol lies in its general applicability to any system built on measured physical signals (battery systems, electrical grids, data centers, heat exchangers, or mechanical turbines). The external draft attempted to introduce domain-specific tools (such as Lyapunov exponents, Direct Feedback Alignment (DFA), and halo adapters) directly into the core, violating this abstraction layer.
 2.  **Exclusion of Algorithmic Bloat**:
     Lyapunov exponents and DFA are specific mathematical metrics that are not universally applicable, nor are they a required standard for general verification audits. Forcing them into the protocol's core represents a form of developer/domain bias that P10 was explicitly created to prevent.
 3.  **Strict Prevention of Fabrication (Blocker Rule)**:
