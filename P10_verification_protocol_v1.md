@@ -58,9 +58,45 @@ every claim in it can be independently re-run, not from who signed it.
 
 ---
 
-## 3. The verification sequence
+## 3. The P10 Generic Audit Workflow
 
-The protocol begins with Stage 0 (Admissibility), followed by five ordered levels (L1–L5). **A failure at any stage halts the audit** — there is no point checking data integrity if the claim is structurally unfalsifiable, running statistics on data that failed integrity, or testing reproducibility on a result already shown to be a physical artifact. The report states exactly where the audit stopped and why.
+To maintain complete reproducibility and eliminate hindsight bias, every P10 audit must progress through these seven ordered phases:
+
+1.  **L0 Documentation:** Establish audit admissibility (verbatim claim, independent ground-truth anchor, resolution floor) and document data provenance and applicable licensing conditions.
+    
+    > [!IMPORTANT]
+    > **State Gate Constraint:** No analytical computations or Level 1–4 execution steps may begin before the Data Freeze has been completed.
+    
+2.  **Data Freeze:** Lock a permanent dataset snapshot, calculate SHA-256 checksums, and register the input files in `data_manifest.json` to guarantee reproducibility.
+3.  **Audit Preparation:** Decompose the technical claim into testable sub-claims, address resolution floor constraints, and define a-priori falsification rules before running analytics.
+4.  **Execution:** Execute the predefined audit pipeline (L1–L4) against the frozen dataset. No modification of the frozen dataset is permitted, and no new hypotheses, rules, or thresholds may be introduced during this phase to prevent moving the goalposts.
+5.  **Publication:** Determine the Level 5 verdict (**Verified**, **Verified with Limitations**, **Not Verified**, or **Unfalsifiable-as-Stated**) and issue the formal audit report.
+6.  **Decision Log:** A mandatory registry entry tracking the audit's operational history. It must record:
+    *   Claim ID
+    *   Dataset version
+    *   Audit version
+    *   Protocol version (e.g., P10 v1.1)
+    *   Verdict
+    *   Confidence
+    *   Known limitations & uncertainties
+    *   Reviewer
+    *   Date
+7.  **Mandatory Reproducibility Archive (Immutable Audit Package):** Bundle the finalized assets into a static, unchangeable directory structure containing:
+    *   `report.md` (the issued audit report)
+    *   `metrics.json` (generated computational metrics)
+    *   `decision_log.json` (machine-readable decision metadata log)
+    *   `data_manifest.json` (frozen dataset manifest with hashes)
+    *   `SHA256SUMS` (checksum file for bundle assets)
+    *   `LICENSE` (audit redistribution terms)
+    *   `sources.md` (verifiable URL/ Wayback links)
+    *   `versions.md` (environment and dependency locks)
+
+---
+
+## 4. The verification sequence
+
+The protocol begins with Stage 0 (Admissibility), followed by five ordered levels (L1–L5). **A failure at any stage halts the audit** — there is no point checking data integrity if the claim is structurally unfalsifiable, running statistics on data failed integrity, or testing reproducibility on a result already shown to be a physical artifact. The report states exactly where the audit stopped and why.
+
 
 ### P10-L0 — Audit Admissibility (Stage 0 Gatekeeper)
 *Is this technical claim even capable of being audited?*
@@ -126,7 +162,7 @@ One of three:
 
 ---
 
-## 4. The output format — an audit trail, not a grade
+## 5. The output format — an audit trail, not a grade
 
 The final decision is presented as a per-level trail. Each row carries a **status** and a
 **reason** that points to a concrete test. This is not scoring; it is a documented chain
@@ -148,7 +184,7 @@ claim → test → data → script — is the whole product.
 
 ---
 
-## 5. Report identity and integrity (stated for exactly what they do)
+## 6. Report identity and integrity (stated for exactly what they do)
 
 Each P10 report carries two technical elements. Their descriptions claim **exactly their
 function and nothing more** — no implied accreditation, no legal weight.
@@ -170,7 +206,7 @@ not "certifies compliance."
 
 ---
 
-## 6. The caveat theorem
+## 7. The caveat theorem
 
 **Claim:** In this protocol, the caveat is not a hedge appended to a conclusion — it is
 the operator that performs the separation.
@@ -186,7 +222,7 @@ separates wheat from chaff; a verifier that drops it is winnowing with no wind.*
 
 ---
 
-## 7. Worked example (validation on own corpus)
+## 8. Worked example (validation on own corpus)
 
 The protocol was applied, adversarially, to the author's *own* portfolio — the strongest
 test of a verifier being whether it catches itself:
@@ -205,7 +241,7 @@ could. That is the portfolio's signature: hardest on its own claims first.
 
 ---
 
-## 8. Honest status
+## 9. Honest status
 
 This is a protocol, validated on the author's own corpus. It is not yet validated by
 independent application to third-party claims under commercial conditions — that
