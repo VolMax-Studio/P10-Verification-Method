@@ -15,6 +15,8 @@ The P10 framework is a meta-verification protocol designed to evaluate data-driv
 
 The framework is structured as a two-stage process: a Stage 0 admissibility gatekeeper followed by a five-level computational audit.
 
+The protocol's normative principles: [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md)
+
 ---
 
 ## Directory Map
