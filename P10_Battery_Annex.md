@@ -62,3 +62,34 @@ Every test defined here inherits the discipline of the core **P10 v1.0 Protocol*
 ### R3.1 Metadata and Hash Pinning
 *   **Rule**: BESS audits must pin the exact data manifest containing SHA-256 hashes of all raw telemetry files, including the active power registry, SoC curves, and auxiliary load records.
 *   **Elexon Specific Rule**: Because Elexon BMRS metered volumes are subject to subsequent settlement runs (II, SF, R1, R2, R3, RF, DF) over a multi-year timeline, live API endpoints do not guarantee static data. Audits must freeze raw API pulls into static local archives, calculate their SHA-256 hashes, and use these frozen files as the sole inputs for the verification pipeline (`reproduce.py`).
+
+---
+
+## Part 4: Cell-Level EIS Audit Checklist (Pending — Vendor Data Required)
+
+*Applicable when a vendor submits raw Electrochemical Impedance Spectroscopy (EIS)
+data as the basis for a State of Health (SOH) claim. No public audit cases exist
+in this class yet. These rules are pre-registered for the first vendor submission.*
+
+*Source: Documented electrochemical criticisms (Fabian Jeschull, KIT, 2026),
+cross-referenced against P10 DESIGN_PRINCIPLES.md §4 (measurement boundaries).*
+
+### E4.1 Electrode Configuration Disclosure
+*   **Rule**: The EIS dataset must disclose whether measurements were taken with a 2-electrode or 3-electrode cell configuration.
+*   **Rationale**: 2-electrode setups conflate anode and cathode impedance contributions. A claim attributing impedance shifts to a specific electrode mechanism (e.g., SEI growth, lithium plating) is **Unfalsifiable-as-Stated** without 3-electrode separation.
+*   **Check**: If configuration is undisclosed or confirmed as 2-electrode, per-electrode mechanism claims are halted at L0. Aggregate cell impedance claims may proceed under a Bounded verdict.
+
+### E4.2 Frequency Range and Process Overlap
+*   **Rule**: The reported frequency range must be documented. The audit verifies that claimed equivalent circuit elements (e.g., R_ct, Warburg diffusion) do not overlap in frequency with other processes not accounted for in the model.
+*   **Rationale**: Porous electrode geometry produces a distributed impedance response that can mimic a discrete R_ct arc at mid-frequencies. A reported R_ct that is actually a geometric artifact of electrode porosity is a model assignment error, not a physical measurement.
+*   **Check**: If the vendor model assigns a discrete semicircle to charge-transfer without demonstrating frequency separation from porosity effects, the cell-level mechanism claim is **Bounded** — the aggregate impedance shift is real; the mechanistic assignment is not independently verified.
+
+### E4.3 Equivalent Circuit Model — Curve-Fitting vs. Physical Identification
+*   **Rule**: The vendor must provide the equivalent circuit model used for fitting and demonstrate that the model parameters (R_ct, C_dl, W_Warburg, etc.) are physically unique — i.e., that alternative circuit topologies do not produce equivalent fits within measurement uncertainty.
+*   **Rationale**: Many EC models over-parameterize: a Warburg element in series with R_ct can produce statistically identical fits to a distributed CPE element across a wide frequency range. SOH claims built on ambiguous fits are **Unfalsifiable-as-Stated** by P10 Criterion 3 (no unique falsification rule).
+*   **Check**: Require residual analysis (Kramers-Kronig consistency) and model comparison (e.g., AIC/BIC) for at least two competing circuit topologies.
+
+### E4.4 OOD Generalization Boundary
+*   **Rule**: Any SOH model trained on EIS spectra must document the operational boundary (temperature, SoC, C-rate, cycle count at measurement) within which its predictions are valid.
+*   **Rationale**: EIS is highly sensitive to temperature and SoC; a model calibrated at 25°C / 50% SoC does not generalize to field conditions without explicit OOD validation. Absence of this boundary is a Principle #4 violation (untestable region filled by assumption).
+*   **Check**: Predictions outside the documented training boundary are classified as **Not Exercised** for verdict purposes — not falsified, but not verified either.
