@@ -79,8 +79,8 @@ To illustrate the necessity of the P10-L0 gatekeeper, we compare two recent case
 
 ### Case 1: AEMO BESS Dispatch Audit
 *   **Claim ($C$):** Battery energy storage systems (BESS) conform to 5-minute dispatch instructions in the NEM.
-*   **Ground Truth ($T$):** Publicly archived 5-minute SCADA averages (SCADAVALUE) and 5-minute dispatch targets (TOTALCLEARED) from AEMO NEMWEB.
-*   **Falsification ($E$):** Maximum error exceedance bands ($\max(6\text{ MW}, 3\%\text{ capacity})$).
+*   **Ground Truth ($T$):** 5-minute unit SCADA averages (SCADAVALUE) and 5-minute dispatch targets (TOTALCLEARED) from AEMO NEMWEB. *Note: 4-second unit telemetry is not publicly available — it is participant-private under the FPP framework, with public archives stripped of unit-level resolution. The inaccessibility of 4-second unit data is itself a documented transparency finding of the audit (ES-AU-03).*
+*   **Falsification ($E$):** Maximum error exceedance bands ($\max(6\text{ MW}, 3\%\text{ capacity})$) — *VolMax descriptive band derived from observed dispatch variance; not a regulatory determination or AEMO enforcement threshold.*
 *   **Physical Constraints ($P$):** Power output must respect nameplate limits and bid parameters.
 *   **L0 Status:** **Auditable (Proceed to L1).** Resulted in a complete, reproducible audit report with a clear verdict.
 

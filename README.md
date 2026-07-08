@@ -31,11 +31,14 @@ Before beginning any analysis, the proposed audit must pass the L0 checklist. It
 
 ### 2. [L1–L5 — Core Verification Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)
 Once admissibility is verified, the claim enters the core five-level audit:
-*   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and train/test partitioning.
+*   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and temporal split integrity.
 *   **L2 Physics Compliance:** Enforces physical laws, conservation limits, and resolution thresholds.
 *   **L3 Statistical Integrity:** Detects data leakage, preprocessing leakage, and concurrence tracking.
 *   **L4 Reproducibility:** Pin-locks code and inputs, ensuring deterministic replication.
-*   **L5 Independent Verdict:** Delivers the final verdict: *Verified*, *Verified with Limitations*, or *Not Verified*.
+*   **L5 Independent Verdict:** Delivers the final verdict per admissible claim: *Verified*, *Verified with Limitations*, *Not Verified*, or *Unfalsifiable-as-Stated*.
+
+> [!NOTE]
+> **Multi-claim audits:** L0 applies per claim. A claim halted at L0 is recorded in the final ledger as **Unfalsifiable-as-Stated** alongside the L5 verdicts of all admissible claims. This preserves a single coherent report structure regardless of whether individual claims are rejected at the gatekeeper or proceed through the full L1–L5 stack.
 
 ### 3. [Domain Annex: Battery Systems](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Battery_Annex.md)
 Translates the general P10 protocol into concrete, domain-specific checks for electrochemical storage assets, defining explicit tests for capacity degradation, thermal response, and dispatch conformance.
