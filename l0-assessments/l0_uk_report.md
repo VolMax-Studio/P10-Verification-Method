@@ -104,13 +104,14 @@ We harvest specific public claims by UK BESS operators, using the updated P10 Cl
 
 ### C. BW ESS (Bramley BESS)
 *   **Claim ID:** `UK-BWESS-001` (Capacity & Hardware Claim)
-*   **BM Unit ID:** `E_BRLE-1` (embedded generator registered under Party ID `BWESSBRA`)
+*   **BM Unit ID:** None locatable (`E_BRLE-1` was the speculative identifier; not found in Elexon registry)
 *   **Verbatim Claim:**
     > *"100MW / 331MWh"* ... *"deploy Sungrow’s PowerTitan 2.0 liquid cooled BESS – a system that combines a 2.5MW Power Conversion System using integrated string inverters and a 5MWh battery into a single container."*
 *   **Live URL:** [BW ESS News: secures financing for Bramley](https://bw-ess.com/news/bw-ess-secures-financing-for-its-operational-331mwh-bramley-bess)
 *   **Archive Snapshot:** [web.archive.org/web/20260115042230/https://bw-ess.com/news/bw-ess-secures-financing-for-its-operational-331mwh-bramley-bess](https://web.archive.org/web/20260115042230/https://bw-ess.com/news/bw-ess-secures-financing-for-its-operational-331mwh-bramley-bess)
 *   **Access Date:** 2026-07-07
-*   **Testability Class:** **TESTABLE**. The 100 MW / 331 MWh active capacity is verifiable using Elexon B1610 metered volumes.
+*   **Testability Class:** **UNFALSIFIABLE from public data**. The asset is real and has been commercially operational since February 2025 under a tolling agreement with Shell; the capacity claims are likely correct. However, no standalone BM Unit registration was locatable in Elexon's registry under any derived identifier (`E_BRLE-1`, `BRLE40`, `E_BRLE40`, `T_BRLE40`, `2__BRLE40`, `2__EBRLE40`), nor within the registered portfolio of the offtakers (Shell Energy Europe Limited / Shell Energy UK Limited). Aggregation under a virtual/supplier BM Unit is the most likely explanation but is not independently confirmed; what is established is that per-unit telemetry is not publicly locatable, rendering individual unit behavior unobservable.
+
 *   **Business Impact Class:** **A** (verifies performance of Sungrow's PowerTitan 2.0 liquid-cooled system).
 
 *   **Claim ID:** `UK-BWESS-002` (Tolling Agreement Claim)
@@ -136,7 +137,7 @@ Under P10, "Risk" represents the **computational and verification cost of falsif
 | Claim ID | Company | Claim Type | Risk Class | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | **UK-HARMONY-001** | Harmony Energy | Active Power Capacity / Dispatch | **Medium** | Capacity and duration verified by analyzing B1610 metered volumes over a 30-day window. |
-| **UK-BWESS-001** | BW ESS | Active Power Capacity | **Medium** | Verifiable by calculating maximum continuous energy throughput from B1610 data. |
+| **UK-BWESS-001** | BW ESS | Active Power Capacity | **Verification Risk: High** | No standalone BM Unit registration found (checked `E_BRLE-1`, `BRLE40`, `E_BRLE40`, `T_BRLE40`, `2__BRLE40`, `2__EBRLE40`), making per-unit telemetry unobservable in public data. |
 | **UK-ZENOBE-001** | Zenobē | Synthetic Inertia Stability | **High** | Falsification is impossible without sub-second nodal electrical parameters withheld by NESO. |
 | **UK-BWESS-002** | BW ESS | Commercial Tolling Terms | **Very High** | Requires private contract details; CAISO/Elexon registries contain no commercial tolling logs. |
 
@@ -163,8 +164,12 @@ We define the **Transparency Class (T0–T5)** of data sources strictly by objec
 
 ### B. Operator L0 Admissibility Verdicts
 *   **Harmony Energy:** **ADMISSIBLE** (T2 operator, claims are Low-to-Medium risk, L0 PASS).
-*   **BW ESS:** **ADMISSIBLE** (T2 operator, capacity claims are Low-to-Medium risk, L0 PASS).
+*   **BW ESS:** **HALTED (Unfalsifiable-as-Stated)** (T2 operator, no standalone BM Unit telemetry found under checked identifiers, claims are unfalsifiable from public data).
 *   **Zenobē:** **HOLD** (T3 operator, stability claims are High risk and FAIL on L0; standard active power dispatch is admissible, but core stability claims are halted).
+
+### C. Reclassification & Correction Note (July 11, 2026)
+*   **Correction:** The initial L0 scouting report (dated July 7, 2026) incorrectly classified BW ESS as **ADMISSIBLE** based on the speculative assumption that a standalone BM Unit (`E_BRLE-1`) existed matching its T4 transparency profile. A direct API query of the Elexon Insights Solution (B1610 stream and `/reference/bmunits/all` registry) confirmed that no records or registrations exist under `E_BRLE-1` or any related identifiers. The earlier verdict is corrected here to **HALTED (Unfalsifiable-as-Stated)**. The asset itself is active and real, but its individual telemetry is not publicly locatable.
+
 
 ---
 
@@ -174,7 +179,9 @@ We define the **Transparency Class (T0–T5)** of data sources strictly by objec
     *   *Target Claim:* `UK-HARMONY-001` (98 MW / 196 MWh capacity claim) over a 30-day window (June 2026).
     *   *Ready Pipeline:* The Elexon metered data pipeline and raw telemetry for June 2026 are already fully operational in our local `volmax-gb-bess-audit` repository! The Pillswood audit starts with the pipeline ready.
 2.  **BW ESS (Bramley BESS):**
-    *   *Target Claim:* `UK-BWESS-001` (100 MW / 331 MWh capacity) using the same B1610 Elexon pipeline.
+    *   *Target Claim:* `UK-BWESS-001` (100 MW / 331 MWh capacity).
+    *   *Status:* **HALTED** at Level 0 due to the inability to locate individual per-unit telemetry in BMRS.
+
 
 ---
 
