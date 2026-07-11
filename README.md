@@ -31,6 +31,10 @@ Before beginning any analysis, the proposed audit must pass the L0 checklist. It
 
 *If any check fails, the audit is terminated at L0 as **Unfalsifiable-as-Stated**.*
 
+*   **Worked Examples:**
+    *   [ERCOT L0 Feasibility Assessment](l0-assessments/ercot_l0_feasibility.md)
+    *   [UK L0 Feasibility Assessment](l0-assessments/l0_uk_report.md)
+
 ### 2. [L1–L5 — Core Verification Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_verification_protocol_v1.md)
 Once admissibility is verified, the claim enters the core five-level audit:
 *   **L1 Data Integrity:** Verifies data provenance, timestamps, calibration, and temporal split integrity.
@@ -49,6 +53,6 @@ Translates the general P10 protocol into concrete, domain-specific checks for el
 
 ## The Core Philosophy
 
-1.  **Hardest on ourselves first:** The protocol is applied adversarially to the analyst's own assumptions first (see the [Governance Rejection Notice](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/REJECTION_NOTICE_v1.1.md) as a demonstration of self-applied admissibility limits).
+1.  **Hardest on ourselves first:** The protocol is applied adversarially to the analyst's own assumptions first (see the [Governance Rejection Notice](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/governance/REJECTION_NOTICE_v1.1.md) as a demonstration of self-applied admissibility limits).
 2.  **No institutional seals:** Trust is established through complete, local reproducibility of every test and figure.
 3.  **The Caveat Theorem:** Caveats are not disclaimers; they are the active operators that detect and bound statistical anomalies. A verifier that drops caveats has discarded its own instrument.
