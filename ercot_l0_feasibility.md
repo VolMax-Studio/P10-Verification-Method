@@ -184,3 +184,14 @@ verdict grammar. Capability claims are not refuted by absence of exercise.
 4. Write audit_prep.md with filled-in 001a/001b claims.
 5. Commit audit_prep.md (pre-registration freeze).
 6. Download SCED ZIP for target window. Hash on arrival.
+
+---
+
+## Outcome Note (2026-07-09)
+
+**Implementation vs. Pre-registration Deviation Report:**
+1. **Data Access & Anchor Quality:** The planned direct download of primary ERCOT `NP3-965-ER` ZIPs from the MIS portal was blocked by ERCOT's Web Application Firewall (WAF) returning `HTTP 403` for non-US residential traffic. A probe run on a public US-region GitHub Actions runner (run ID 29116383279) was also blocked, indicating ERCOT blocks datacenter IP ranges. 
+2. **Anchor Downgrade:** The audit anchor was downgraded to **Class B (Third-Party Rendering)**. Telemetry was retrieved via `gridstatus.io` REST API.
+3. **Redistribution Decision:** Because the data source shifted from public ERCOT ZIPs to `gridstatus.io` API, the `gridstatus.io` Terms of Use (prohibiting substantial redistribution of exports) became the governing license. Consequently, raw CSV data was **not** committed to the repository. Integrity is preserved via SHA-256 hashes inside `data_manifest.json`.
+4. **ToU Live Pin:** The live pin of `https://www.ercot.com/legal/terms` was not executable from the Serbian residential location due to geo-blocking, and datacenter-based automated retrievals were blocked by the WAF. The citation remains pinned to the public indexed cache, supplemented by a GHA probe step.
+
