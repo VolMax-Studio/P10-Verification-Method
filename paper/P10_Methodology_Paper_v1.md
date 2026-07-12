@@ -20,9 +20,9 @@ A recurring pattern observed in conventional grid asset verification is a relian
 ## 1.2 The Flattery and Illusions of Self-Reported Metrics
 In the absence of independent verification, the energy transition relies on self-reported, vendor-supplied data. This creates three distinct classes of verification risk:
 
-1.  **Flattered Backtests:** Operational backtests are historically vulnerable to post-hoc optimization and parameter tuning, making it easy to flatter performance. A vendor can optimize parameters post-hoc to show perfect efficiency, thermal behavior, or market revenue, but these models rarely survive live grid dispatch.
-2.  **Purchased Illusions:** Without independent anchoring, asset buyers are frequently purchasing an illusion of performance. The declared capacities and degradation rates exist in contractual warranties and simulation models, but cannot be physically demonstrated in the field.
-3.  **Idealized Datasheets:** Manufacturer datasheets present clean, lab-tested performance under nominal conditions, which systematically hide the immediate deviations caused by ambient environmental factors, auxiliary loads, and unmodelled degradation in real-world operations.
+1.  **Flattered Backtests:** Operational models are historically vulnerable to post-hoc optimization and parameter tuning, making it easy to flatter performance prior to live grid dispatch.
+2.  **Purchased Illusions:** Without independent anchoring, asset buyers purchase capacity and degradation guarantees that exist only in contractual warranties and cannot be physically demonstrated in the field.
+3.  **Idealized Datasheets:** Manufacturer specifications represent idealized laboratory behavior that systematically hides the real-world performance losses caused by auxiliary loads, degradation, and ambient environmental conditions.
 
 When verification is based on proprietary, self-reported data, the boundary between auditing an operational claim and merely republishing a marketing document disappears.
 
@@ -47,7 +47,7 @@ This classification is deliberately neutral. It is a statement about the observa
 
 Every Level 1 (L1) audit rests on an independent evidentiary anchor. The anchor need not be of any single institutional type; across the VolMax portfolio it has taken at least two distinct forms:
 
-- **Regulatory settlement telemetry** — the accounting record a market operator maintains for financial settlement, e.g., Elexon B1610 actual generation output (GB) or ERCOT SCED 60-day disclosure telemetry (US-TX).
+- **Regulatory settlement telemetry** — the accounting record a market operator maintains for financial settlement, e.g., Elexon B1610 actual generation output (GB) or ERCOT SCED 60-Day ESR telemetry disclosure (US-TX).
 - **Operator-disclosed public telemetry** — data an operator publishes on a public dashboard, e.g., the ECO STOR Bollingstedt operational export (`speicherbetrieb.eco-stor.de`).
 
 What qualifies a source as an anchor is not its institutional origin but three properties: it must be **public** (accessible without privileged access), it must be **independent of the audit** (not produced or shaped by the verifier), and it must **expose falsifiable quantities** (values whose internal consistency or physical plausibility can be checked, such as power against a declared ceiling).
@@ -94,7 +94,7 @@ To demonstrate that the admissibility layer performs real exclusion rather than 
 
 These cases are mapped across two orthogonal axes:
 1.  **The Causal Axis:** Categorized by the source of the failure: *Boundary* (data availability or licensing constraints), *Verifier* (human design or process errors), *Tooling* (automated agent-level gaps), or *Empirical* (falsification or rejection of model hypotheses by grid telemetry).
-2.  **The Intervention Axis:** Categorized by the temporal phase and cost of the correction. This spans a spectrum from low-cost, upfront halts (Cases 1, 2, 4, and 5) that prevent the audit from launching, through mid-stream corrections caught during the verification process (Case 9), to high-cost retractions of published or pre-registered conclusions (Cases 3 and 8). Scope rejections (Case 7) occupy the boundary between design rules and process constraints, while Case 6 represents an empirical rejection where the data is admissible but the physical hypothesis is refuted by grid performance.
+2.  **The Intervention Axis:** Categorized by the temporal phase and cost of the correction. This spans a spectrum from low-cost, upfront halts (Cases 1, 2, 4, and 5) that prevent the audit from launching, through mid-stream corrections caught during the verification process (Case 8), to high-cost retractions of published or pre-registered conclusions (Cases 3 and 7). Scope rejections (Case 6) occupy the boundary between design rules and process constraints, while Case 9 represents an empirical rejection where the data is admissible but the physical hypothesis is refuted by grid performance.
 
 ---
 
@@ -115,8 +115,8 @@ Boundary failures occur when the physical, regulatory, or legal constraints of t
 ## 3.2 Verifier Failures (Human Design & Process Errors)
 Verifier failures document errors in the design and execution of the methodology itself. Acknowledging these failures enforces the self-correcting discipline of the verifier.
 
-7.  **v1.1 Rejected:** The formal rejection of P10 version 1.1 due to domain-specific bloat and the fabrication of speculative model entities (such as Lyapunov exponents, Detrended Fluctuation Analysis [DFA], HALO parameters, and the "VolMax Engine") to protect and maintain a lean, domain-agnostic core.
-8.  **L0 Admissibility Correction (Self-Failure):** The correction of a previously published `ADMISSIBLE` verdict for BW ESS. The verifier had speculatively assumed that the identifier `E_BRLE-1` existed and mapped to its T4 capacity market profile. Direct API registry queries disproved the assumption, forcing the verifier to correct the verdict to `HALTED`.
+6.  **v1.1 Rejected:** The formal rejection of P10 version 1.1 due to domain-specific bloat and the fabrication of speculative model entities (such as Lyapunov exponents, Detrended Fluctuation Analysis [DFA], HALO parameters, and the "VolMax Engine") to protect and maintain a lean, domain-agnostic core.
+7.  **L0 Admissibility Correction (Self-Failure):** The correction of a previously published `ADMISSIBLE` verdict for BW ESS. The verifier had speculatively assumed that the identifier `E_BRLE-1` existed and mapped to its T4 capacity market profile. Direct API registry queries disproved the assumption, forcing the verifier to correct the verdict to `HALTED`.
 
 *What this class proves:* Verifier failures demonstrate the verifier's capacity for self-correction, proving that the protocol does not suffer from self-reinforcing bias and will actively retract its own errors when exposed to new registry evidence.
 
@@ -125,7 +125,7 @@ Verifier failures document errors in the design and execution of the methodology
 ## 3.3 Tooling Failures (Machine & Agent-Level Gaps)
 Tooling failures record errors introduced by automated agents, highlighting the necessity of human gating.
 
-9.  **Model Gap-Filling Bias (AI Error):** The tendency of automated agents to fill telemetric and registry gaps with speculative physical or commercial mechanisms (e.g., asserting a confirmed ID in report headers and claiming an asset was "aggregated inside a virtual portfolio" despite having only a negative search result). This registry entry documents the verifier's vulnerability to presenting speculative explanations as verified fact.
+8.  **Model Gap-Filling Bias (AI Error):** The tendency of automated agents to fill telemetric and registry gaps with speculative physical or commercial mechanisms (e.g., asserting a confirmed ID in report headers and claiming an asset was "aggregated inside a virtual portfolio" despite having only a negative search result). This registry entry documents the verifier's vulnerability to presenting speculative explanations as verified fact.
 
 *What this class proves:* Tooling failures highlight the necessity of a human-in-the-loop gate, showing that automated verification pipelines cannot be blindly executed without active human oversight of the qualitative claims.
 
@@ -134,7 +134,7 @@ Tooling failures record errors introduced by automated agents, highlighting the 
 ## 3.4 Empirical Rejections (Hypothesis Falsification)
 Empirical rejections occur when the open data and telemetry are fully available and admissible, but the physical hypothesis or transferability assumption being tested is refuted by the evidence.
 
-6.  **EFC-Signatures-Not-Carried:** A cross-jurisdictional verification failure where operational signatures (specifically Equivalent Full Cycles and standby ratios) derived from one market baseline (ECO STOR Bollingstedt) did not generalize or transfer to assets operating under different market volatility and dispatch rules (AEMO NEM BESS fleet).
+9.  **EFC-Signatures-Not-Carried:** A cross-jurisdictional verification failure where operational signatures (specifically Equivalent Full Cycles and standby ratios) derived from one market baseline (ECO STOR Bollingstedt) did not generalize or transfer to assets operating under different market volatility and dispatch rules (AEMO NEM BESS fleet).
 
 *What this class proves:* Empirical rejections prove that the protocol is capable of genuine falsification, demonstrating that it does not merely check data compliance but actively tests and rejects incorrect physical hypotheses against real-world grid performance.
 
@@ -198,4 +198,4 @@ The case studies in this paper demonstrate the operation of P10's admissibility 
 
 
 ## 5.3 Complete Audit Reproducibility
-The authority of the P10 protocol rests not on institutional consensus, but on mathematical reproducibility. In alignment with this principle, all quantitative findings, capacity bounds, and telemetry metrics presented in Section 4 are backed by public, immutable audit packages. Every verification script, data manifest, and SHA-256 telemetry hash is open-source and version-controlled, allowing any independent verifier to reconstruct, verify, or falsify the conclusions of this paper.
+The authority of the P10 protocol rests not on institutional consensus, but on mathematical reproducibility. In alignment with this principle, all quantitative findings, capacity bounds, and telemetry metrics presented in Section 4 are backed by public, immutable audit packages. Every verification script, data manifest, and SHA-256 telemetry hash is open-source and version-controlled, allowing any independent verifier to reconstruct, verify, or falsify the conclusions of this paper. Ultimately, P10 does not attempt to verify or prove every performance claim. It defines, in advance, which claims can be independently tested from public evidence and which cannot, establishing a transparent boundary between physical grid performance and unverified interpretation.
