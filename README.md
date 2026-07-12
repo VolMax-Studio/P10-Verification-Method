@@ -19,6 +19,16 @@ The protocol's normative principles: [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md
 
 ---
 
+## Methodology Paper
+
+### [P10 Methodology Paper (v1.0)](paper/P10_Methodology_Paper_v1.md)
+*   **Author:** Ivan Nestorov (VolMax Studio Lab)
+*   **Status:** Version 1.0 (Level 5 Verdict: Verified with Limitations; F4 Deferred pending ERCOT SCED database documentation)
+*   **Concept DOI:** *Pending Zenodo registration*
+*   **Overview:** A comprehensive, five-section paper detailing the verification gap in grid-scale assets, the doctrine of falsifiability, the Failure Registry of open data boundaries, and two real-world battery energy storage system (BESS) case studies (Pillswood BESS in GB and esVolta Anole BESS in ERCOT).
+
+---
+
 ## Directory Map
 
 ### 1. [L0 — Audit Admissibility Protocol](file:///home/volmax-studio/volmax-projects/iot2/PORTFOLIO/P10-Verification-Method/P10_Audit_Admissibility_Protocol.md)
