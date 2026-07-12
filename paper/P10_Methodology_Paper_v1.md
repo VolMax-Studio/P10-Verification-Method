@@ -1,10 +1,10 @@
 ---
-Title: P10 Grid-Scale Asset Verification Methodology
-Author: Nestorov, Ivan (VolMax Studio Lab)
-ORCID: 0009-0006-7940-9539
-Date: 2026-07-12
-License: CC BY 4.0
-Version: v1.0 (Level 5 Verdict: Verified with Limitations; F4 Deferred pending ERCOT SCED database documentation)
+Title: "P10 Grid-Scale Asset Verification Methodology"
+Author: "Nestorov, Ivan (VolMax Studio Lab)"
+ORCID: "0009-0006-7940-9539"
+Date: "2026-07-12"
+License: "CC BY 4.0"
+Version: "v1.0 (Level 5 Verdict: Verified with Limitations; F4 Deferred pending ERCOT SCED database documentation)"
 ---
 
 
