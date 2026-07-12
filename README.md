@@ -24,7 +24,7 @@ The protocol's normative principles: [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md
 ### [P10 Methodology Paper (v1.0)](paper/P10_Methodology_Paper_v1.md)
 *   **Author:** Ivan Nestorov (VolMax Studio Lab)
 *   **Status:** Version 1.0 (Level 5 Verdict: Verified with Limitations; F4 Deferred pending ERCOT SCED database documentation)
-*   **Concept DOI:** *Pending Zenodo registration*
+*   **Concept DOI:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21320141.svg)](https://doi.org/10.5281/zenodo.21320141)
 *   **Overview:** A comprehensive, five-section paper detailing the verification gap in grid-scale assets, the doctrine of falsifiability, the Failure Registry of open data boundaries, and two real-world battery energy storage system (BESS) case studies (Pillswood BESS in GB and esVolta Anole BESS in ERCOT).
 
 ---

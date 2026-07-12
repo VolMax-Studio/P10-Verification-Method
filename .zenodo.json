@@ -1,0 +1,22 @@
+{
+  "title": "The Verification Gap in Grid-Scale Assets: The P10 Non-Invasive Falsification Protocol",
+  "description": "The P10 protocol defines a non-invasive falsification methodology for evaluating data-driven claims on grid-scale energy assets. Rather than relying on proprietary internal logs, P10 audits grid assets by matching their public nameplate claims against independent, public grid telemetry anchors. This paper details the P10 protocol—comprising a Level 0 admissibility gate followed by a five-level verification sequence (L1–L5)—and demonstrates its application through two utility-scale battery energy storage system (BESS) audits: Pillswood BESS (GB) and esVolta Anole BESS (ERCOT).",
+  "creators": [
+    {
+      "name": "Nestorov, Ivan",
+      "affiliation": "VolMax Studio Lab",
+      "orcid": "0009-0006-7940-9539"
+    }
+  ],
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "P10",
+    "Falsifiability",
+    "Open Data",
+    "BESS",
+    "Grid Analytics",
+    "Independent Audit",
+    "Admissibility Gate"
+  ]
+}
