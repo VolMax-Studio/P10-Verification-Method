@@ -12,7 +12,7 @@
 
 **Input:** A complete vector of scalar values $M_1(m, W) \in [0, 1]$ computed per market $m$ in comparison set $\mathcal{M}$ (containing $N_{\text{total}} = |\mathcal{M}|$ markets) over bounded window $W$, alongside local reference expectations $E[M_1(m)] = 1 - q$.
 
-**Output:** Exactly one label $L \in \{\text{NULL}, \text{ISOLATED}, \text{REGIONAL}\}$ emitted for window $W$, or execution abort `ABORT — INCOMPLETE_SET` if any market $m \in \mathcal{M}$ fails completeness floor or gap rules under M₁ §4.
+**Output:** Exactly one classification label $L \in \{\text{NULL}, \text{ISOLATED}, \text{REGIONAL}\}$ emitted for window $W$, or evaluation status `NOT_EVALUATED — INCOMPLETE_SET` (`label: null`) if any market $m \in \mathcal{M}$ fails completeness floor or gap rules under M₁ §4.
 
 ---
 
@@ -41,8 +41,8 @@ The emission rules form a strict, exhaustive, non-overlapping partition over the
 | **`REGIONAL`** | $N_{\text{elevated}}(W) \ge N_{\text{high}}$ | $[N_{\text{high}}, N_{\text{total}}]$ | Systemic multi-zone regional elevation across the comparison set. |
 
 ### Partition, Incomplete Set, & Reachability Rules:
-1. **Partition Completeness:** Since $N_{\text{low}} < N_{\text{high}}$, every integer $k \in \{0, 1, \dots, N_{\text{total}}\}$ falls into exactly one range. The classifier emits exactly one label for every fully-measured comparison set.
-2. **Incomplete Set Abort:** If telemetry for any market $m \in \mathcal{M}$ is incomplete or aborted under M₁ §4, $N_{\text{total}} = |\mathcal{M}|$ is incomplete. Imputing zero elevation to missing markets is forbidden (M₁ §4.2), and dynamically scaling $N_{\text{high}}/N_{\text{low}}$ to $|\mathcal{M}_{\text{valid}}|$ is forbidden. The classifier emits `ABORT — INCOMPLETE_SET` and no classification label is assigned.
+1. **Partition Completeness:** Since $N_{\text{low}} < N_{\text{high}}$, every integer $k \in \{0, 1, \dots, N_{\text{total}}\}$ falls into exactly one range. The classifier emits exactly one classification label for every fully-measured comparison set.
+2. **Incomplete Set Abort:** If telemetry for any market $m \in \mathcal{M}$ is incomplete or aborted under M₁ §4, $N_{\text{total}} = |\mathcal{M}|$ is incomplete. Imputing zero elevation to missing markets is forbidden (M₁ §4.2), and dynamically scaling $N_{\text{high}}/N_{\text{low}}$ to $|\mathcal{M}_{\text{valid}}|$ is forbidden. The classifier emits record evaluation status `NOT_EVALUATED — INCOMPLETE_SET` with `label: null`. The window is published as an unclassified record entry in the series log ($S_1$ §2.5).
 3. **Reachability Constraint:** The `ISOLATED` label is reachable if and only if $N_{\text{high}} \ge N_{\text{low}} + 2$. If $N_{\text{high}} = N_{\text{low}} + 1$, the integer range $[N_{\text{low}}+1, N_{\text{low}}]$ is empty ($\emptyset$), and the vocabulary collapses into a clean binary partition $\{\text{NULL}, \text{REGIONAL}\}$.
 
 ---
@@ -57,7 +57,10 @@ The emission rules form a strict, exhaustive, non-overlapping partition over the
 
 ## 5. Amendment Record
 
-**v1.2.0 → v1.3.0.** Resolved $N_{\text{total}}$ handling under incomplete telemetry. Defined strict `ABORT — INCOMPLETE_SET` mandate prohibiting both synthetic zero-imputation ($M_1$ §4.2) and dynamic threshold scaling when any market fails completeness. Updated §4.2 freeze scope for scheduled series under S₁.
+**v1.2.0 → v1.3.0.**
+1. Resolved $N_{\text{total}}$ handling under incomplete telemetry: defined `NOT_EVALUATED — INCOMPLETE_SET` status (`label: null`) prohibiting zero-imputation ($M_1$ §4.2) and dynamic threshold scaling.
+2. Updated §1 Input to require complete vector and Output domain for unclassified entries, harmonized with S₁ §2.5.
+3. Updated §4.2 parameter freeze scope for scheduled series under S₁.
 
 **v1.1.0 → v1.2.0.** Restored Mandatory Classifier Properties in §4 (NULL reachability, pre-observation freeze, reference expectation coupling). Clarified §3 reachability constraints for `ISOLATED` label when $N_{\text{high}} = N_{\text{low}} + 1$.
 
