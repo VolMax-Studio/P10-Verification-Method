@@ -31,8 +31,8 @@ Windows failing telemetry completeness floor or gap limits are published as uncl
    else. A window is never chosen, skipped, re-run for a different period, or deferred
    because its result is uninteresting or inconvenient.
 3. **Publication lag.** The run executes no earlier than L days after the end of W, where
-   L is frozen in `PARAMS.md`. **L is measured, not assumed** — it is defined as the number of calendar days after the end of W required for all designated series across comparison set $\mathcal{M}$ to reach final published completeness (crossing M₁ §4 floor with no unrevised gaps > 15m), accounting for TSO settlement revision windows. The measurement is recorded at freeze time.
-4. **Every window is published**, including windows classified `NULL` and unclassified windows (`NOT_EVALUATED — INCOMPLETE_SET`). A `NULL` month is a measurement, not a non-event; the record of `NULL`s is what makes any non-`NULL` label interpretable at all.
+   L is frozen in `PARAMS.md`. **L is measured, not assumed** — it is defined as the number of calendar days after the end of W required for all designated comparison series across set $\mathcal{M}$ (the 6 ENTSO-E zones) to reach final published completeness (crossing M₁ §4 floor with no unrevised gaps > 15m). Descriptive companion markets (e.g. GB Elexon BMRS) carry non-voting status and do not alter or delay $L$. The measurement is recorded at freeze time.
+4. **Every window is published**, including windows classified `NULL` and unclassified windows (`NOT_EVALUATED — INCOMPLETE_SET`). A `NULL` month is a measurement, not a non-event; the record of `NULL`s is what makes any non-`NULL` label interpretable at all. Unclassified record entries (`NOT_EVALUATED — INCOMPLETE_SET`) enter the denominator of total calendar operating windows ($N_{\text{calendar\_total}}$), but are strictly excluded from the denominator of classified evaluation labels ($N_{\text{classified\_total}}$) when calculating empirical label probabilities such as $P(\text{REGIONAL})$ or $P(\text{NULL})$.
 5. **Abort is not skip.** A window that aborts under the completeness floor or gap rule
    (M₁ §4) is published as an unclassified record entry (`evaluation_status: "NOT_EVALUATED — INCOMPLETE_SET"`, `label: null`) with its complete telemetry completeness account. It is never silently omitted from the calendar log, and it is never retried with relaxed parameters.
 
@@ -76,7 +76,7 @@ The following are structural blindnesses introduced **by this selection rule**, 
 
 1. **Régime Drift Blindness:** Under a rolling baseline, the instrument cannot observe slow régime change. If the entire comparison set drifts in the same direction over a period comparable to or longer than B, the reference drifts with it and M₁ returns approximately (1 − q) regardless. The instrument reports "ordinary" precisely because "ordinary" has moved.
 2. **Variance Drift Blindness:** If market dispersion/volatility increases without shifting the median, the quantile $Q_q$ rises. Consequently, the instrument becomes less sensitive precisely during periods of elevated variance.
-3. **Telemetry Outage Selection Bias:** If telemetry publication failures or data gaps correlate with severe grid stress events, scheduled evaluation fails completeness under M₁ §4 and the window is published as `NOT_EVALUATED — INCOMPLETE_SET`. The instrument cannot observe scarcity events during co-occurring TSO telemetry blackouts.
+3. **Telemetry Outage Selection Bias:** If telemetry publication failures or data gaps correlate with severe grid stress events, scheduled evaluation fails completeness under M₁ §4 and the window is published as `NOT_EVALUATED — INCOMPLETE_SET`. Under such co-occurring telemetry blackouts, the instrument cannot observe scarcity events.
 
 ### 4.2 Calibration & Baseline Incorporations
 1. **Built-in Expectation:** By construction, approximately (1 − q) of baseline time sits at or above R, so an ordinary window yields M₁ ≈ (1 − q). Any elevation threshold in **C** is read against that expectation, never as an absolute quantity.
@@ -107,7 +107,7 @@ them and are never merged into one series, one chart, or one summary statistic. 
 document presenting both states the mode of each result in the same breath as the result.
 
 S₂ is not defined here and does not exist until it is written and frozen. Until then, no
-run is executed under a triggered rationale. Legacy pre-registered probe runs (such as OMN-003-PROBE) carry registry designation `selection_mode: legacy_triggered_human` and exist outside S₁ and S₂.
+run is executed under a triggered rationale. Legacy pre-registered probe runs (such as OMN-003-PROBE) carry registry designation `selection_mode: legacy_triggered_human` and exist outside S₁ and S₂. An isolated instance re-evaluation of a pre-existing probe finding (such as `2026-08-scarcity-jul`) inherits the selection mode of the original finding (`selection_mode: legacy_triggered_human`).
 
 ---
 
@@ -125,9 +125,9 @@ run is executed under a triggered rationale. Legacy pre-registered probe runs (s
 
 **v0.1.0 → v0.2.0.**
 1. Corrected §1 population definition to reflect complete telemetry condition under M₁ §4 and `NOT_EVALUATED — INCOMPLETE_SET` status.
-2. Harmonized §2.5 and C §3.2: aborted windows are published as unclassified record entries (`evaluation_status: "NOT_EVALUATED — INCOMPLETE_SET"`, `label: null`).
-3. Added Telemetry Outage Selection Bias as 3rd Structural Blindness in §4.1. Separated §4 into Structural Blindnesses (§4.1) vs Calibration Properties (§4.2).
-4. Specified publication lag $L$ in §2.3 and added $N \ge 12$ constraint explicitly to §5 parameter table.
+2. Harmonized §2.5 and C §3.2: aborted windows are published as unclassified record entries (`evaluation_status: "NOT_EVALUATED — INCOMPLETE_SET"`, `label: null`). Added denominator rules for $N_{\text{calendar\_total}}$ vs $N_{\text{classified\_total}}$ in §2.4.
+3. Added Telemetry Outage Selection Bias as 3rd Structural Blindness in §4.1 with aligned modality. Separated §4 into Structural Blindnesses (§4.1) vs Calibration Properties (§4.2).
+4. Specified publication lag $L$ in §2.3 across primary comparison set $\mathcal{M}$ (excluding descriptive companions), added $N \ge 12$ constraint explicitly to §5 parameter table, and documented selection mode inheritance in §6.
 
 *Amendments require a version bump with stated rationale. Definitions are never edited
 silently.*
