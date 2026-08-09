@@ -1,0 +1,63 @@
+# C — Scarcity Persistence Classifier
+
+> **Document Status:** Draft — SPREMNO ZA GEJT (not frozen, not ratified)
+> **Version:** v1.2.0 · supersedes v1.1.0, v1.0.0 (defects resolved — see §5)
+> **Author:** Nestorov, Ivan / VolMax Studio Lab / ORCID 0009-0006-7940-9539
+> **Role:** Classifier **C** for event class *scarcity persistence*, under
+> `INSTRUMENT_SPEC — Measurement Domain and Visibility Boundaries` (v0.3.0).
+
+---
+
+## 1. Input and Output Domain
+
+**Input:** A set of scalar values $M_1(m, W) \in [0, 1]$ computed per market $m$ in comparison set $\mathcal{M}$ (containing $N_{\text{total}} = |\mathcal{M}|$ markets) over bounded window $W$, alongside local reference expectations $E[M_1(m)] = 1 - q$.
+
+**Output:** Exactly one label $L \in \{\text{NULL}, \text{ISOLATED}, \text{REGIONAL}\}$ emitted for window $W$.
+
+---
+
+## 2. Elevation Evaluation & Parameter References
+
+For each market $m \in \mathcal{M}$, elevation is evaluated against frozen threshold $S_{\text{thresh}}$:
+
+$$\text{Elevated}(m) = \mathbb{I}\left(M_1(m, W) \ge S_{\text{thresh}}\right)$$
+
+The total number of elevated markets in comparison set $\mathcal{M}$ is:
+
+$$N_{\text{elevated}}(W) = \sum_{m \in \mathcal{M}} \text{Elevated}(m)$$
+
+**Parameters:** $S_{\text{thresh}}$, $N_{\text{high}}$, and $N_{\text{low}}$ are abstract parameter symbols. **No numeric parameter value is hardcoded in this document.** All numeric values are frozen in `PARAMS.md` prior to data acquisition.
+
+---
+
+## 3. Closed Vocabulary & Complete Partition Emission Rules
+
+The emission rules form a strict, exhaustive, non-overlapping partition over the integer domain $N_{\text{elevated}} \in \{0, 1, \dots, N_{\text{total}}\}$, where $0 \le N_{\text{low}} < N_{\text{high}} \le N_{\text{total}}$:
+
+| Label | Condition on $N_{\text{elevated}}(W)$ | Integer Range | Interpretation |
+|---|---|---|---|
+| **`NULL`** | $N_{\text{elevated}}(W) \le N_{\text{low}}$ | $[0, N_{\text{low}}]$ | Ordinary baseline state; signal absent or within uncoordinated noise floor. |
+| **`ISOLATED`** | $N_{\text{low}} < N_{\text{elevated}}(W) < N_{\text{high}}$ | $[N_{\text{low}}+1, N_{\text{high}}-1]$ | Localized or idiosyncratic elevation lacking regional multi-zone concurrence. |
+| **`REGIONAL`** | $N_{\text{elevated}}(W) \ge N_{\text{high}}$ | $[N_{\text{high}}, N_{\text{total}}]$ | Systemic multi-zone regional elevation across the comparison set. |
+
+### Partition & Reachability Rules:
+1. **Partition Completeness:** Since $N_{\text{low}} < N_{\text{high}}$, every integer $k \in \{0, 1, \dots, N_{\text{total}}\}$ falls into exactly one range. The classifier emits exactly one label for every possible measurement outcome.
+2. **Reachability Constraint:** The `ISOLATED` label is reachable if and only if $N_{\text{high}} \ge N_{\text{low}} + 2$. If $N_{\text{high}} = N_{\text{low}} + 1$, the integer range $[N_{\text{low}}+1, N_{\text{low}}]$ is empty ($\emptyset$), and the vocabulary collapses into a clean binary partition $\{\text{NULL}, \text{REGIONAL}\}$.
+
+---
+
+## 4. Mandatory Classifier Properties
+
+1. **Reachability of NULL:** The `NULL` label is reachable and is emitted whenever window elevation remains at or below ordinary expectation ($N_{\text{low}}$).
+2. **Pre-Observation Freeze:** $S_{\text{thresh}}$, $N_{\text{high}}$, and $N_{\text{low}}$ are frozen in `PARAMS.md` prior to data acquisition for any pre-registered run.
+3. **Reference Distribution Coupling:** The elevation threshold $S_{\text{thresh}}$ must be expressed in units of the instrument's own reference expectation $E[M_1(m)] = 1 - q$ (e.g., $S_{\text{thresh}} = k \cdot (1 - q)$ or a declared multiplier of baseline expectation), ensuring $S_{\text{thresh}}$ is not fitted post-hoc to a remembered window.
+
+---
+
+## 5. Amendment Record
+
+**v1.1.0 → v1.2.0.** Restored Mandatory Classifier Properties in §4 (NULL reachability, pre-observation freeze, reference expectation coupling). Clarified §3 reachability constraints for `ISOLATED` label when $N_{\text{high}} = N_{\text{low}} + 1$.
+
+**v1.0.0 → v1.1.0.** Two gate blockers resolved. (a) §3 emission rules rewritten as a strict mathematical partition over $N_{\text{elevated}}$, eliminating the unlabelled state that occurred when $N_{\text{elevated}} \ge N_{\text{high}}$ without benchmark confirmation. (b) Removed `m_benchmark` as a structural veto inside **C**, restoring market symmetry across $\mathcal{M}$ and complying with `INSTRUMENT_SPEC` §3.3. (c) Removed hardcoded numeric values ($0.150$) from the body of **C**; all values are deferred to `PARAMS.md`.
+
+*VolMax Studio Lab · P10 Verification Protocol*
