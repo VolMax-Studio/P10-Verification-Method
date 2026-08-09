@@ -1,6 +1,6 @@
 # POINTER — Instruments Location
 
-> **Notice:** All VolMax Observatory instrument specifications ($M_1$, $C$, $S_1$, `INSTRUMENT_SPEC`, `SERIES_TEMPLATE`, `INSTANCE_ISOLATION_PROTOCOL`) have been consolidated into `Open-Market-Notes/instruments/` under consolidation commit SHA [`bbd6b9b`](https://github.com/VolMax-Studio/Open-Market-Notes/commit/bbd6b9b).
+> **Notice:** All VolMax Observatory instrument specifications ($M_1$, $C$, $S_1$, `INSTRUMENT_SPEC`, `SERIES_TEMPLATE`, `INSTANCE_ISOLATION_PROTOCOL`) have been consolidated into `Open-Market-Notes/instruments/` under consolidation commit range [`bbd6b9b..fe78983`](https://github.com/VolMax-Studio/Open-Market-Notes/compare/bbd6b9b...fe78983).
 
 Specifications are maintained under git version control in the canonical repository:
 - [INSTRUMENT_SPEC.md](https://github.com/VolMax-Studio/Open-Market-Notes/tree/main/instruments/INSTRUMENT_SPEC.md)
